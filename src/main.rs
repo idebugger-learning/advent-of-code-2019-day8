@@ -35,4 +35,27 @@ fn main() {
         number_of_2s,
         number_of_1s * number_of_2s
     );
+
+    let mut image = vec![];
+    for i in 0..HEIGHT {
+        for j in 0..WIDTH {
+            let index = i * WIDTH + j;
+            let pixel = layers
+                .iter()
+                .map(|layer| layer[index])
+                // .rev()
+                .reduce(|acc, color| if acc == '2' { color } else { acc })
+                .expect("No pixel was calculated somehow");
+            image.push(pixel);
+        }
+    }
+
+    for i in 0..HEIGHT {
+        for j in 0..WIDTH {
+            let index = i * WIDTH + j;
+            let char = if image[index] == '0' { ' ' } else { '8' };
+            print!("{}", char);
+        }
+        println!();
+    }
 }
